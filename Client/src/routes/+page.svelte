@@ -1,0 +1,1 @@
+<section>SvelteKit Store</section>
