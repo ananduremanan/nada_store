@@ -9,10 +9,6 @@
 	function cancel() {
 		dispatch('cancel', false);
 	}
-
-	const handleLogin = async () => {
-		const reponse = fetch('http://127.0.0.1:5000/api/login');
-	};
 </script>
 
 <div
@@ -42,4 +38,9 @@
 			console.log(userName, password);
 		}}>Login</button
 	>
+	<div>
+		Don't Have An Account ? <a href="/signup" on:click={cancel}
+			><span class="underline decoration-dashed">Sign Up</span></a
+		>
+	</div>
 </div>
