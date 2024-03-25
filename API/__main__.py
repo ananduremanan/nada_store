@@ -1,10 +1,13 @@
 from flask import Flask, jsonify, request
 from supaClient import supabase
 from cryptography.fernet import Fernet
-from cryptData import encrypt_data, decrypt_data, generate_key
+from cryptData import encrypt_data, decrypt_data
+import os
+import secrets
+import string
 
 app = Flask(__name__)
-KEY = generate_key()
+KEY = os.environ.get("KEY")
 
 @app.route('/api/data', methods=['POST'])
 def get_data():
@@ -15,9 +18,23 @@ def get_data():
 def login():
     loginData = request.json
     try:
-        userName = loginData["userName"]
-        password = loginData["password"]
-    
+        user = supabase.table('dbo.userTable').select('email', 'user_Password').eq('email', loginData["email"]).execute()
+        
+        def generate_token(length=16):
+            alphabet = string.ascii_letters + string.digits + "-_"
+            return ''.join(secrets.choice(alphabet) for _ in range(length))
+
+        
+        if len(user.data) > 0:
+            decrypted_pass = decrypt_data(KEY, user.data[0]["user_Password"])
+
+            if decrypted_pass == loginData["password"]:
+                token = generate_token()
+                return jsonify({"status": "success", "email" : loginData["email"], "token": token})
+
+        else:
+            return jsonify({"status": "user not found"})
+
     except Exception as e:
         return jsonify({'error': str(e)}), 400
 
