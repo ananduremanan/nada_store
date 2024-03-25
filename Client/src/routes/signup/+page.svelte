@@ -1,9 +1,9 @@
 <script lang="ts">
-	import '../../app.css'
+	import '../../app.css';
 </script>
 
-<section class="flex flex-col items-center">
-	<img src="/images/signup.png" alt="signup" width="200" class="" />
+<section class="relative flex flex-col items-center">
+	<img src="/images/signup.png" alt="signup" width="200" class="z-0 relative" />
 	<div>SignUp To Use Nada Store</div>
 	<div class="flex flex-col gap-2 w-full mt-8">
 		<input
@@ -36,6 +36,7 @@
 			class="p-2 w-full rounded-md text-black text-sm outline-1 outline-dotted"
 			rows="5"
 		/>
+		<div class="text-xs">By Signing Up you're agreeing to our terms and conditions.</div>
 		<button class="bg-black text-white p-2 rounded-md w-full text-sm mb-8" on:click={() => {}}
 			>Sign Up</button
 		>

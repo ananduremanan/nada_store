@@ -14,7 +14,12 @@ def get_data():
 @app.route('/api/login', methods=['POST'])
 def login():
     loginData = request.json
-    return jsonify(loginData)
+    try:
+        userName = loginData["userName"]
+        password = loginData["password"]
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
 
 @app.route('/api/signup', methods=['POST'])
 def signUp():

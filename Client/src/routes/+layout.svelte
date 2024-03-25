@@ -5,7 +5,7 @@
 	let isOpen: boolean = false;
 </script>
 
-<nav class="px-8 lg:px-28 py-4 flex justify-between sticky top-0 z-50">
+<nav class="px-8 lg:px-28 py-4 flex justify-between sticky top-0 z-50 bg-white">
 	<a href="/" class="text-lg">Nada Store</a>
 	<div>
 		<button
