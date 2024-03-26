@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import notify from '../components/Notify.svelte';
+	import { postSET } from '$lib';
+	import Notify from './Notify.svelte';
 
 	let email: string;
 	let password: string;
@@ -16,22 +17,15 @@
 	const handleLogin = async () => {
 		try {
 			loading = true;
-			const response = await fetch('http://127.0.0.1:5000/api/login', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({
-					email: email,
-					password: password
-				})
+			loginError = false;
+			const res = await postSET({
+				destination: 'http://127.0.0.1:5000/api/login',
+				body: { email: email, password: password }
 			});
-			const data = await response.json();
-			if (data.status === 'success') {
-				localStorage.setItem('user', JSON.stringify(data));
+			if (res.status === 'success') {
+				localStorage.setItem('user', JSON.stringify(res));
 			} else {
 				loginError = true;
-				notify(true, 'Error', 'Error');
 			}
 		} catch (error) {
 			console.error(error);
@@ -44,6 +38,7 @@
 <div
 	class="z-10 bg-black text-white p-4 rounded-xl flex flex-col gap-5 w-full m-8 justify-center items-center relative"
 >
+	<Notify showNotification={loginError} />
 	<button
 		class="bg-white text-black w-6 h-6 rounded-full text-center absolute top-1 right-1"
 		on:click={cancel}>x</button
