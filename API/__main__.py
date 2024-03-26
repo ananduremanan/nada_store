@@ -5,8 +5,10 @@ from cryptData import encrypt_data, decrypt_data
 import os
 import secrets
 import string
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 KEY = os.environ.get("KEY")
 
 @app.route('/api/data', methods=['POST'])
@@ -20,7 +22,7 @@ def login():
     try:
         user = supabase.table('dbo.userTable').select('email', 'user_Password').eq('email', loginData["email"]).execute()
         
-        def generate_token(length=16):
+        def generate_token(length=128):
             alphabet = string.ascii_letters + string.digits + "-_"
             return ''.join(secrets.choice(alphabet) for _ in range(length))
 
@@ -30,7 +32,10 @@ def login():
 
             if decrypted_pass == loginData["password"]:
                 token = generate_token()
-                return jsonify({"status": "success", "email" : loginData["email"], "token": token})
+                if loginData["email"] == os.environ.get("ADMIN"):
+                    return jsonify({"status": "success", "email" : loginData["email"], "token": token, "isAdmin": 1})
+                else:
+                    return jsonify({"status": "success", "email" : loginData["email"], "token": token})
 
         else:
             return jsonify({"status": "user not found"})

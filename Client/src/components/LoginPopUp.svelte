@@ -1,14 +1,44 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
+	import notify from '../components/Notify.svelte';
 
-	let userName: string;
+	let email: string;
 	let password: string;
+	let loading: boolean = false;
+	let loginError: boolean = false;
 
 	const dispatch = createEventDispatcher();
 
 	function cancel() {
 		dispatch('cancel', false);
 	}
+
+	const handleLogin = async () => {
+		try {
+			loading = true;
+			const response = await fetch('http://127.0.0.1:5000/api/login', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					email: email,
+					password: password
+				})
+			});
+			const data = await response.json();
+			if (data.status === 'success') {
+				localStorage.setItem('user', JSON.stringify(data));
+			} else {
+				loginError = true;
+				notify(true, 'Error', 'Error');
+			}
+		} catch (error) {
+			console.error(error);
+		} finally {
+			loading = false;
+		}
+	};
 </script>
 
 <div
@@ -24,7 +54,7 @@
 		type="text"
 		placeholder="Enter Your Email"
 		class="p-2 w-full rounded-md outline-0 text-black text-xl"
-		bind:value={userName}
+		bind:value={email}
 	/>
 	<input
 		type="password"
@@ -35,9 +65,15 @@
 	<button
 		class="bg-white text-black p-2 rounded-md w-full text-xl"
 		on:click={() => {
-			console.log(userName, password);
-		}}>Login</button
+			handleLogin();
+		}}
 	>
+		{#if loading}
+			Please Wait...
+		{:else}
+			Login
+		{/if}
+	</button>
 	<div>
 		Don't Have An Account ? <a href="/signup" on:click={cancel}
 			><span class="underline decoration-dashed">Sign Up</span></a
