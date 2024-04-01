@@ -37,7 +37,7 @@
 </script>
 
 <div
-	class="z-10 bg-black text-white p-4 rounded-xl flex flex-col gap-5 w-full m-8 justify-center items-center relative"
+	class="z-10 bg-black text-white p-4 rounded-xl flex flex-col gap-5 w-full m-8 justify-center items-center relative md:w-96"
 >
 	<button
 		class="bg-white text-black w-6 h-6 rounded-full text-center absolute top-1 right-1"
