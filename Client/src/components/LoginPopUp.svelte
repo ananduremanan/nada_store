@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import { postSET } from '$lib';
+	import { Button } from 'flowbite-svelte';
 
 	let email: string;
 	let password: string;
@@ -44,24 +45,24 @@
 		on:click={cancel}>x</button
 	>
 	<img src="/images/login.webp" alt="login bot" width="200" />
-	<div class="text-2xl">Login To Access Your Account</div>
+	<div class="text-2xl md:text-lg">Login To Access Your Account</div>
 	<input
 		type="text"
 		placeholder="Enter Your Email"
-		class="p-2 w-full rounded-md outline-0 text-black text-xl"
+		class="p-2 w-full rounded-md outline-0 text-black text-xl md:text-lg"
 		bind:value={email}
 	/>
 	<input
 		type="password"
 		placeholder="Enter Your Password"
-		class="p-2 w-full rounded-md outline-0 text-black text-xl"
+		class="p-2 w-full rounded-md outline-0 text-black text-xl md:text-lg"
 		bind:value={password}
 	/>
 	{#if loginError}
 		<div class="text-xs">Wrong User Email or Password</div>
 	{/if}
-	<button
-		class="bg-white text-black p-2 rounded-md w-full text-xl"
+	<!-- <button
+		class="bg-white text-black p-2 rounded-md w-full text-xl md:text-lg"
 		on:click={() => {
 			handleLogin();
 		}}
@@ -71,7 +72,20 @@
 		{:else}
 			Login
 		{/if}
-	</button>
+	</button> -->
+	<Button
+		color="alternative"
+		class="bg-white text-black p-2 rounded-md w-full text-xl md:text-lg"
+		on:click={() => {
+			handleLogin();
+		}}
+		>{#if loading}
+			Please Wait...
+		{:else}
+			Login
+		{/if}</Button
+	>
+
 	<div>
 		Don't Have An Account ? <a href="/signup" on:click={cancel}
 			><span class="underline decoration-dashed">Sign Up</span></a

@@ -3,6 +3,7 @@
 	import LoginPopUp from '../components/LoginPopUp.svelte';
 	import { onMount } from 'svelte';
 	import md5 from 'md5';
+	import { DarkMode } from 'flowbite-svelte';
 
 	let isOpen: boolean = false;
 	let avatrImgUrl: string;
@@ -24,12 +25,13 @@
 	});
 </script>
 
-<nav class="px-8 lg:px-28 py-4 flex justify-between sticky top-0 z-50 bg-white">
+<nav class="px-8 lg:px-28 py-4 flex justify-between sticky top-0 z-50 bg-white dark:bg-black">
 	<a href="/" class="text-lg">Nada Store</a>
-	<div>
+	<div class="flex items-center justify-center">
 		{#if avatrImgUrl != undefined}
 			<img src={avatrImgUrl} alt="{avatrImgUrl} avatar" class="w-10 h-10 rounded-xl" />
 		{:else}
+			<DarkMode />
 			<button
 				class="bg-black text-white px-2 py-1 rounded-md"
 				on:click={() => {
