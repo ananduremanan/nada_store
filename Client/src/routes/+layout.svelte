@@ -4,9 +4,6 @@
 	import { onMount } from 'svelte';
 	import md5 from 'md5';
 	import { DarkMode } from 'flowbite-svelte';
-	import { page } from '$app/stores';
-
-	const isLoggedIn = $page.url.searchParams.has('id');
 
 	let isOpen: boolean = false;
 	let avatrImgUrl: string;
