@@ -1,12 +1,14 @@
 <script lang="ts">
 	import { Card, Button, Rating, Badge } from 'flowbite-svelte';
 	import { Carousel } from 'flowbite-svelte';
+	import { images } from '$lib';
 </script>
 
 <section>
+	<Carousel {images} duration={3000} imgClass="object-cover h-full w-fit rounded-sm" />
 	<div class="mb-4 text-base">Hot In Templates</div>
 	<div class="grid grid-cols-1 gap-2 md:grid-cols-4 md:gap-4">
-		<Card padding={'none'} class="rounded-3xl">
+		<Card padding={'none'} class="rounded-3xl cursor-pointer">
 			<img src="/images/svelte.svg" alt="" />
 			<div class="p-4 lg:p-6">
 				<h2 class="font-bold">Svelte E-Commerce Web Template</h2>
@@ -19,7 +21,7 @@
 				</div>
 			</div>
 		</Card>
-		<Card padding={'none'} class="rounded-3xl">
+		<Card padding={'none'} class="rounded-3xl cursor-pointer">
 			<img src="/images/SwiftUI.png" alt="" class="object-cover" />
 			<div class="p-4 lg:p-6">
 				<h2 class="font-bold">SwiftUI Component Library</h2>
@@ -32,7 +34,7 @@
 				</div>
 			</div>
 		</Card>
-		<Card padding={'none'} class="rounded-3xl">
+		<Card padding={'none'} class="rounded-3xl cursor-pointer">
 			<img src="/images/svelte.svg" alt="" />
 			<div class="p-4 lg:p-6">
 				<h2 class="font-bold">Svelte E-Commerce Web Template</h2>
